@@ -6,21 +6,25 @@ import Entity.Global.TileType;
 import Entity.Global.ID;
 
 import Entity.Player;
+import Entity.Sword;
 import GameObject.GameObject;
 import Main.Game;
 import GameObject.SpawnPointRoom;
+
 import java.awt.image.BufferedImage;
 
 
-public  class World {
+public class World {
     private int WIDTH, HEIGHT;
     public BufferedImage spr;
     private String dir;
-    public boolean next=false;
+    public boolean next = false;
+
     public World(BufferedImage level) {
-        this.spr=level;
+        this.spr = level;
 
     }
+
     public BufferedImage getSpr() {
         return spr;
     }
@@ -53,14 +57,55 @@ public  class World {
         HEIGHT = hEIGHT;
     }
 
-    public void BitMap(int xx, int yy,int pa) {
-        if(pa==0xFFFFFFFF){
-            add(new Tile(xx*32,yy*32,ID.Block,TileType.Bricks));
+    public void BitMap(int xx, int yy, int pa) {
+        if (pa == 0xFFFFFFFF) {
+            if (xx == getWidth() - 1) {
+                add(new Tile(xx * 32, yy * 32, ID.Block, TileType.RightWall));
+            } else if (xx == 0) {
+                add(new Tile(0, yy * 32, ID.Block, TileType.LeftWall));
+            }
+            if (yy == 0) {
+                add(new Tile(xx * 32, 0, ID.Block, TileType.Wall));
+                add(new Tile(xx * 32, 32, ID.Block, TileType.Bricks));
+                add(new Tile(xx * 32, 64, ID.Block, TileType.Bricks));
+            }
+            if (yy == getHeight() - 1) {
+                add(new Tile(xx * 32, yy * 32, ID.Block, TileType.Wall));
+                add(new Tile(xx * 32, yy * 32 + 32, ID.Block, TileType.Bricks));
+                add(new Tile(xx * 32, yy * 32 + 64, ID.Block, TileType.Bricks));
+            }
         }
-        if(pa==0xFF0026FF)add(new Player(xx*32,yy*32,ID.Player,Game.handler));
-        if(pa==0xFF00FF21)add(new SpawnPointRoom(xx*32,yy*32,ID.Default));
+        if (xx < getHeight() - 1 && xx > 0) {
+            if (yy > 2 && yy < getHeight() - 1) add(new Tile(xx * 32, yy * 32, ID.Floor, TileType.Floor));
+        }
+        if (pa == 0xFF0026FF){
+            Player player=new Player(xx * 32, yy * 32, ID.Player, Game.handler);
+            add(player);
+
+        }
+        if (pa == 0xFF00FF21) {
+            add(new SpawnPointRoom(xx * 32, yy * 32, ID.Default));
+            if (xx == 0 || xx == getWidth() - 1) {
+                if (getPixel(xx, yy - 2) == 0xFFFFFFFF) {
+                    add(new Tile(xx * 32, (yy - 2) * 32, ID.Block, TileType.Bricks));
+                    add(new Tile(xx * 32, (yy-1) * 32, ID.Block, TileType.Bricks));
+                }
+            }
+        }
     }
-    public void add(GameObject obj){
+
+    public int getPixel(int x, int y) {
+        int[] p;
+        int pa = 0;
+
+        p = new int[getWidth() * getHeight()];
+        pa = spr.getRGB(x, y);
+        spr.getRGB(0, 0, getWidth(), getHeight(), p, 0, getWidth());
+
+        return pa;
+    }
+
+    public void add(GameObject obj) {
         Game.handler.add(obj);
     }
 }

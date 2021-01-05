@@ -43,10 +43,10 @@ public abstract class GameObject {
 		if (hand.isLeft()) {velX = -speed;setDir(-1);}
 		else if(!hand.isRight())velX=0;
 
-		if(hand.isUp()){ velY=-speed; }
+		if(hand.isUp()){ velY=-speed; setDir(-2);}
 		else if(!hand.isDown())velY=0;
 
-		if(hand.isDown()){velY=speed;}
+		if(hand.isDown()){velY=speed;setDir(2);}
 		else if(!hand.isUp())velY=0;
 
 		return velX!=0|velY!=0;

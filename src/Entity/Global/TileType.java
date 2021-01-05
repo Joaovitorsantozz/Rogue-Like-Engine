@@ -17,7 +17,8 @@ public enum TileType {
                 t.setDepth(Depth.LITTLE + 1);
                 break;
             case Floor:
-                spr = HandlerGame.spr.getSprite(0, 16, 16, 16);
+                spr = HandlerGame.spr.getSprite(0, 16, 32, 32);
+
                 break;
             case RightWall:
                 spr = HandlerGame.spr.getSprite(32, 0, 16, 16);

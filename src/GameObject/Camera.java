@@ -14,10 +14,10 @@ public class Camera {
 	public void tick(GameObject obj) {
 		x+=((obj.getX()-x)-Game.W/2f)*0.03f;
 		y+=((obj.getY()-y)-Game.H/2f)*0.03f;
-		if(x<=0)x=0;
-		if(x>=HandlerGame.level.getWidth()*32-Game.W)x=HandlerGame.level.getWidth()*32-Game.W;
+		if(x<=-Game.W/2f)x=-Game.W/2f;
+		if(x>=HandlerGame.level.getWidth()*32-Game.W/2f)x=HandlerGame.level.getWidth()*32-Game.W/2f;
 		if(y<=0)y=0;
-		if(y>=HandlerGame.level.getHeight()*32-Game.H)y=HandlerGame.level.getHeight()*32-Game.H;
+		if(y>=HandlerGame.level.getHeight()*32-Game.H/2f)y=HandlerGame.level.getHeight()*32-Game.H/2f;
 	}
 	private void clamp(){}
 	public float getX() {

@@ -16,7 +16,10 @@ import java.util.List;
 public class GameObjectHandler {
 	public List<GameObject> object = new ArrayList<>();
 	public List<Particles>particles= new ArrayList<>();
-	private boolean right = false, left = false,up = false,down=false;
+
+
+
+	private boolean right = false, left = false,up = false,down=false,attack=false;
 	public void update() {
 		for (int i=0;i<object.size();i++) {
 			GameObject ee=object.get(i);
@@ -56,6 +59,13 @@ public class GameObjectHandler {
 	}
 	public void setLeft(boolean left) {
 		this.left = left;
+	}
+	public boolean isAttack() {
+		return attack;
+	}
+
+	public void setAttack(boolean attack) {
+		this.attack = attack;
 	}
 	public boolean isUp() { return up; }
 	public void setUp(boolean up) { this.up = up; }

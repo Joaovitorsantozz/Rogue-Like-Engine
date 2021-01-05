@@ -10,9 +10,6 @@ public enum ID {
 	Player(),
 	Block(),
 	Floor(),
-	Particle();
-
-
-
-
+	Particle(),
+	Sword();
 }

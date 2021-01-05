@@ -7,6 +7,7 @@ import Main.utils.Text.Text;
 import World.LevelSwitch;
 
 import java.awt.*;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
@@ -25,6 +26,7 @@ public class Game extends Canvas implements Runnable {
         handler = new GameObjectHandler();
         handlergame = new HandlerGame();
         this.addKeyListener(new KeyInput(handler));
+        this.addMouseMotionListener(new MouseMotion(handler));
         text = new Text(FontStyle.getFont(150, Font.BOLD), "Hasnt Focus!", 300, 400);
         //
         start();

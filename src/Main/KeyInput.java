@@ -31,7 +31,7 @@ public class KeyInput implements KeyListener, FocusListener {
 				if(b==KeyEvent.VK_A)handler.setLeft(true);
 			}
 		}
-		//Arrays.fill(press, true);
+		Arrays.fill(press, true);
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -45,7 +45,7 @@ public class KeyInput implements KeyListener, FocusListener {
 				if(b==KeyEvent.VK_A)handler.setLeft(false);
 			}
 		}
-		//Arrays.fill(press, false );
+		Arrays.fill(press,false);
 	}
 
 	@Override
