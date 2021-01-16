@@ -11,5 +11,7 @@ public enum ID {
 	Block(),
 	Floor(),
 	Particle(),
-	Sword();
+	Weapon(),
+	Bow(),
+	GrassByome();
 }

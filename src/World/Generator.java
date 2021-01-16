@@ -1,20 +1,20 @@
 package World;
 
 import Main.Game;
+import World.Templates.RoomTemplates;
 
-import java.util.HashSet;
 import java.util.Random;
 
 public class Generator {
     public int opendDir, random;
     public Random rand = new Random();
     public boolean spawned;
-    private RoomTemplates templates;
+    public RoomTemplates templates;
     private Level actualLevel;
     public int lastRoom, repeat;
 
     public Generator() {
-        opendDir = rand.nextInt(5);
+        opendDir = 0;
         templates = new RoomTemplates();
         Gen();
 
@@ -27,29 +27,29 @@ public class Generator {
             //Left
             //Right
             switch (opendDir) {
-                case 1, 0 -> {
+                case 0->{
+                    Game.handler.ClearObjects();
+                    setActualLevel(new Level(templates.startRoom));
+                }
+                case 1-> {
                     Game.handler.ClearObjects();
                     random = rand.nextInt(templates.bottom.length);
-                    Level level = new Level(templates.bottom[random]);
-                    setActualLevel(level);
+                    setActualLevel(new Level(templates.bottom[random]));
                 }
                 case 2 -> {
                     Game.handler.ClearObjects();
                     random = rand.nextInt(templates.top.length);
-                    Level level = new Level(templates.top[random]);
-                    setActualLevel(level);
+                    setActualLevel(new Level(templates.top[random]));
                 }
                 case 3 -> {
                     Game.handler.ClearObjects();
                     random = rand.nextInt(templates.left.length);
-                    Level level = new Level(templates.left[random]);
-                    setActualLevel(level);
+                    setActualLevel( new Level(templates.left[random]));
                 }
                 case 4 -> {
                     Game.handler.ClearObjects();
                     random = rand.nextInt(templates.right.length);
-                    Level level = new Level(templates.right[random]);
-                    setActualLevel(level);
+                    setActualLevel(  new Level(templates.right[random]));
                 }
             }
             NotSameLevel();

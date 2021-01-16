@@ -1,25 +1,26 @@
 package Main;
 
 import Entity.Global.ID;
+import GameObject.GameObject;
 import GameObject.GameObjectHandler;
 import Main.utils.FontStyle;
+import Main.utils.LoadImage;
 import Main.utils.Text.Text;
 import World.LevelSwitch;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
     public static GameObjectHandler handler;
     private static final long serialVersionUID = 1L;
-    private Thread render;
     private boolean isRunning;
     public int Frames, upd;
-    public static final int W = 1280, H = 730;
+    public static final int W = 1230, H = 730;
     public static HandlerGame handlergame;
     public static Text text;
-    BufferStrategy bs;
     public Game() {
         new Windows(W, H, "Engine", this);
         // Instancias
@@ -27,6 +28,7 @@ public class Game extends Canvas implements Runnable {
         handlergame = new HandlerGame();
         this.addKeyListener(new KeyInput(handler));
         this.addMouseMotionListener(new MouseMotion(handler));
+        this.addMouseListener(new MouseMotion(handler));
         text = new Text(FontStyle.getFont(150, Font.BOLD), "Hasnt Focus!", 300, 400);
         //
         start();
@@ -34,6 +36,7 @@ public class Game extends Canvas implements Runnable {
 
     public static void main(String[] args) {
         new Game();
+
     }
 
     private void start() {
@@ -41,15 +44,28 @@ public class Game extends Canvas implements Runnable {
         Thread tick = new Thread(this, "TickThread");
         tick.start();
         new Thread(this::run2, "RenderThread").start();
+
     }
 
     public void tick() {
-        if (Thread.currentThread().getName().equals("TickThread")&&hasFocus()) {
-            handler.update();
-            UpdateCam();
-            new LevelSwitch().upd();
-            handlergame.tick();
-
+        if (Thread.currentThread().getName().equals("TickThread")) {
+            if (hasFocus()) {
+                handler.update();
+                UpdateCam();
+                new LevelSwitch().upd();
+                handlergame.tick();
+            }
+            else{
+                for (int i = 0; i < handler.object.size(); i++) {
+                    GameObject ee = handler.object.get(i);
+                    if (ee.getId() == ID.Player) {
+                        handler.setUp(false);
+                        handler.setDown(false);
+                        handler.setRight(false);
+                        handler.setLeft(false);
+                    }
+                }
+            }
         }
     }
 
@@ -63,11 +79,12 @@ public class Game extends Canvas implements Runnable {
 
     public void render() {
         if (Thread.currentThread().getName().equals("RenderThread")) {
-             bs = this.getBufferStrategy();
+            BufferStrategy bs = this.getBufferStrategy();
             if (bs == null) {
                 this.createBufferStrategy(3);
                 return;
             }
+            // setCursor(getToolkit().createCustomCursor(new LoadImage("/Aim.png").getImage(),new Point(0,0),"cursor"));
             Graphics g = bs.getDrawGraphics();
             g.setColor(Color.black);
             g.fillRect(0, 0, W, H);
@@ -78,19 +95,21 @@ public class Game extends Canvas implements Runnable {
             if (!hasFocus()) {
                 g.setColor(new Color(0, 0, 0, 100));
                 g.fillRect(0, 0, W, H);
-                text.DrawText(g,Color.white,"Default");
+                text.DrawText(g, Color.white, "Default");
             }
             ////////////////////////////////////////////
             g.dispose();
             bs.show();
         }
     }
+
     public void finalRender(Graphics g, Graphics2D g2) {
         g2.translate(-handlergame.cam.getX(), -handlergame.cam.getY());
         handlergame.render(g);
         handler.render(g2);//GO
         g2.translate(handlergame.cam.getX(), handlergame.cam.getY());
         //Things that will be not affect by cam
+        handler.renderNotAffect(g);
         g.setColor(Color.white);
         g.drawString("FPS =" + Frames, 1000, 50);
         g.drawString("Updates =" + upd, 1000, 90);

@@ -1,5 +1,8 @@
 package Entity.particles;
 
+import EngineInterfaces.Renderable;
+import EngineInterfaces.Tickable;
+import Entity.Global.Depth;
 import Entity.Global.ID;
 import GameObject.GameObject;
 import Main.Game;
@@ -9,9 +12,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Random;
 
-public class Particles extends GameObject {
+public class Particles extends GameObject implements Tickable, Renderable {
     Color color;
     public int life;
     private double dx,dy;
@@ -21,6 +25,7 @@ public class Particles extends GameObject {
     double rotate;
     public Particles(int x, int y,float velX,float velY,int life,Color color,ID id,BufferedImage part) {
         super(x, y, id);
+        this.setDepth(Depth.HIGHT+3);
         setWidth(8+new Random().nextInt(8));
         setHeight(getWidth());
         dx=new Random().nextGaussian();
@@ -30,19 +35,19 @@ public class Particles extends GameObject {
         this.velY=velY;
         this.particle=part;
         this.life=life;
+
     }
 
-    public void tick() {
+    public void Update() {
+        life--;
+        if(life<0)Game.handler.particles.remove(this);
         x+=velX*dx;
         y+=velY*dy;
-        life--;
-        if(alpha>=0) alpha--;
-        if(life<=0)Game.handler.particles.remove(this);
+        if(alpha>0) alpha--;
     }
 
 
-
-    public void render(Graphics g) {
+    public void Render(Graphics g) {
         rotate+=0.3;
         Graphics2D g2=(Graphics2D)g;
         g2.rotate(rotate,getX()+getWidth()/2f,getY()+getHeight()/2f);

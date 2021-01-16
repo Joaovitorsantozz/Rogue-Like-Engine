@@ -13,6 +13,7 @@ public abstract class GameObject {
 	protected ID id;
 	private int depth;
 	private int width, height;
+	public BufferedImage spr;
 	public GameObject(int x, int y, ID id) {
 		this.x = x;
 		this.y = y;
@@ -43,10 +44,10 @@ public abstract class GameObject {
 		if (hand.isLeft()) {velX = -speed;setDir(-1);}
 		else if(!hand.isRight())velX=0;
 
-		if(hand.isUp()){ velY=-speed; setDir(-2);}
+		if(hand.isUp()){ velY=-speed;;}
 		else if(!hand.isDown())velY=0;
 
-		if(hand.isDown()){velY=speed;setDir(2);}
+		if(hand.isDown()){velY=speed;}
 		else if(!hand.isUp())velY=0;
 
 		return velX!=0|velY!=0;
@@ -69,6 +70,5 @@ public abstract class GameObject {
 	public ID getId() { return id; }
 	public int getDir() { return dir; }
 	public void setDir(int dir) { this.dir = dir; }
-
-
+	public BufferedImage getSpr(){return this.spr;}
 }

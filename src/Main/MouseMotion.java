@@ -1,6 +1,7 @@
 package Main;
 
-import Entity.Sword;
+import Entity.Global.ID;
+import Weapons.Sword;
 import GameObject.GameObject;
 
 import java.awt.event.MouseAdapter;
@@ -14,9 +15,29 @@ public class MouseMotion extends MouseAdapter {
 
     public void mouseClicked(MouseEvent e) {}
 
-    public void mousePressed(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+        for(int i=0;i<handler.object.size();i++){
+            GameObject ee=handler.object.get(i);
+            if(ee.getId()== ID.Weapon){
+                if(e.getButton()==MouseEvent.BUTTON1) {
+                    handler.setAttack(true);
 
-    public void mouseReleased(MouseEvent e) {}
+                }
+            }
+        }
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        for(int i=0;i<handler.object.size();i++){
+            GameObject ee=handler.object.get(i);
+            if(ee.getId()== ID.Weapon){
+                if(e.getButton()==MouseEvent.BUTTON1) {
+                    handler.setAttack(false);
+                }
+            }
+        }
+
+    }
 
     public void mouseEntered(MouseEvent e) {}
 
@@ -31,8 +52,8 @@ public class MouseMotion extends MouseAdapter {
         for(int i=0;i<handler.object.size();i++){
             GameObject ee=handler.object.get(i);
             if(ee instanceof Sword){
-                ((Sword)ee).rx=e.getX();
-                ((Sword)ee).ry=e.getY();
+                ((Sword) ee).rx=e.getX()+Game.handlergame.cam.getX();
+                ((Sword) ee).ry=e.getY()+Game.handlergame.cam.getY();
             }
         }
     }

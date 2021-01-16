@@ -6,7 +6,7 @@ import Entity.Global.TileType;
 import Entity.Global.ID;
 
 import Entity.Player;
-import Entity.Sword;
+import Weapons.Sword;
 import GameObject.GameObject;
 import Main.Game;
 import GameObject.SpawnPointRoom;
@@ -67,24 +67,20 @@ public class World {
             if (yy == 0) {
                 add(new Tile(xx * 32, 0, ID.Block, TileType.Wall));
                 add(new Tile(xx * 32, 32, ID.Block, TileType.Bricks));
-                add(new Tile(xx * 32, 64, ID.Block, TileType.Bricks));
+                add(new Tile(xx * 32, 64, ID.Block, TileType.DownBrick));
             }
             if (yy == getHeight() - 1) {
                 add(new Tile(xx * 32, yy * 32, ID.Block, TileType.Wall));
                 add(new Tile(xx * 32, yy * 32 + 32, ID.Block, TileType.Bricks));
-                add(new Tile(xx * 32, yy * 32 + 64, ID.Block, TileType.Bricks));
+                add(new Tile(xx * 32, yy * 32 + 64, ID.Block, TileType.DownBrick));
             }
         }
         if (xx < getHeight() - 1 && xx > 0) {
             if (yy > 2 && yy < getHeight() - 1) add(new Tile(xx * 32, yy * 32, ID.Floor, TileType.Floor));
         }
-        if (pa == 0xFF0026FF){
-            Player player=new Player(xx * 32, yy * 32, ID.Player, Game.handler);
-            add(player);
 
-        }
         if (pa == 0xFF00FF21) {
-            add(new SpawnPointRoom(xx * 32, yy * 32, ID.Default));
+            add(new SpawnPointRoom(xx * 32, yy * 32, ID.GrassByome));
             if (xx == 0 || xx == getWidth() - 1) {
                 if (getPixel(xx, yy - 2) == 0xFFFFFFFF) {
                     add(new Tile(xx * 32, (yy - 2) * 32, ID.Block, TileType.Bricks));

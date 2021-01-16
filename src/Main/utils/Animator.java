@@ -1,10 +1,12 @@
 package Main.utils;
 
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 public class Animator{
     private int frames,maxFrames,index,maxIndex;
     private BufferedImage anim[];
+    public boolean can=true;
     public Animator(int maxFrames, int maxIndex) {
         this.maxIndex=maxIndex;
         this.maxFrames=maxFrames;
@@ -20,6 +22,20 @@ public class Animator{
             index=0;
         }
         return anim[index];
+    }
+    public BufferedImage getAnimSolo(){
+        frames+=2;
+        if(frames>maxFrames){
+            frames=0;
+            index++;
+        }
+        if(index>=maxIndex) {
+            index=0;
+        }
+        return anim[index];
+    }
+    private void clearAnim(){
+        Arrays.fill(anim, null);
     }
     public void setAnimation(BufferedImage anim[]){
         this.anim=anim;
@@ -39,5 +55,8 @@ public class Animator{
     }
     public void setMaxIndex(int maxIndex) {
         this.maxIndex = maxIndex;
+    }
+    public void setIndex(int id){
+        this.index=id;
     }
 }
