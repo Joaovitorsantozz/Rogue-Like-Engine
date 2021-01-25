@@ -72,4 +72,5 @@ public class Particles extends GameObject implements Tickable, Renderable {
     public void setOval(boolean oval) {
         this.oval = oval;
     }
+
 }

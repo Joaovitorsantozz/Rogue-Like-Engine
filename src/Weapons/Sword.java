@@ -107,4 +107,5 @@ public class Sword extends WeaponBase implements Tickable, Renderable {
     public Rectangle getBounds() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
+
 }

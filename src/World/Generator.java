@@ -1,7 +1,9 @@
 package World;
 
 import Main.Game;
+import Main.HandlerGame;
 import World.Templates.RoomTemplates;
+import World.Templates.Template;
 
 import java.util.Random;
 
@@ -9,57 +11,55 @@ public class Generator {
     public int opendDir, random;
     public Random rand = new Random();
     public boolean spawned;
-    public RoomTemplates templates;
+    public Template templates;
     private Level actualLevel;
     public int lastRoom, repeat;
+    public static String room = "Dungeon";
 
-    public Generator() {
-        opendDir = 0;
-        templates = new RoomTemplates();
-        Gen();
-
+    public Generator(boolean startroom, String room) {
+        Generator.room = room;
+        opendDir = rand.nextInt(5);
+        templates = new Template(room);
+        if (!startroom) Gen();
+        else StartRoom();
     }
 
     public void Gen() {
         if (!spawned) {
-            //Bottom
-            //Top
-            //Left
-            //Right
             switch (opendDir) {
-                case 0->{
-                    Game.handler.ClearObjects();
-                    setActualLevel(new Level(templates.startRoom));
-                }
-                case 1-> {
+                case 1 -> {
                     Game.handler.ClearObjects();
                     random = rand.nextInt(templates.bottom.length);
-                    setActualLevel(new Level(templates.bottom[random]));
+                    setActualLevel(HandlerGame.level=new Level(templates.bottom[random]));
+                    getLevel().setWidth((templates.bottom[random].getWidth()));
                 }
                 case 2 -> {
                     Game.handler.ClearObjects();
                     random = rand.nextInt(templates.top.length);
-                    setActualLevel(new Level(templates.top[random]));
+                    setActualLevel(HandlerGame.level=new Level(templates.top[random]));
+                    getLevel().setWidth((templates.top[random].getWidth()));
                 }
                 case 3 -> {
                     Game.handler.ClearObjects();
                     random = rand.nextInt(templates.left.length);
-                    setActualLevel( new Level(templates.left[random]));
+                    setActualLevel(HandlerGame.level=new Level(templates.left[random]));
+                    getLevel().setWidth((templates.left[random].getWidth()));
                 }
                 case 4 -> {
                     Game.handler.ClearObjects();
                     random = rand.nextInt(templates.right.length);
-                    setActualLevel(  new Level(templates.right[random]));
+                    setActualLevel(HandlerGame.level=new Level(templates.right[random]));
+                    getLevel().setWidth((templates.right[random].getWidth()));
                 }
             }
             NotSameLevel();
+            Game.handler.resetKeys();
             spawned = true;
         } else {
             lastRoom = opendDir;
         }
 
     }
-
 
     public void NotSameLevel() {
         if (opendDir == lastRoom) {
@@ -71,6 +71,11 @@ public class Generator {
             repeat = 0;
             opendDir = rand.nextInt(4 - repeat);
         }
+    }
+
+    public void StartRoom() {
+        setActualLevel(new Level(templates.startroom));
+        spawned = true;
     }
 
     public Level getLevel() {

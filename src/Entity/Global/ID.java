@@ -13,5 +13,6 @@ public enum ID {
 	Particle(),
 	Weapon(),
 	Bow(),
-	GrassByome();
+	Decorate(),
+	GrassPortal();
 }

@@ -29,7 +29,7 @@ public class GameObjectHandler {
             }
         }
         for (int i = 0; i < particles.size(); i++) {
-            particles.get(i).Update();
+            if(particles.get(i)!=null) particles.get(i).Update();
         }
         object.sort(GameObject.nodeSorter);
 
@@ -43,12 +43,24 @@ public class GameObjectHandler {
             }
         }
         for (int i = 0; i < particles.size(); i++) {
-            particles.get(i).Render(g);
+            if(particles.get(i)!=null)particles.get(i).Render(g);
         }
     }
 
     public void renderNotAffect(Graphics g) {
         uiHandler.drawUI(g);
+    }
+
+    public void resetKeys() {
+        for (int i = 0; i < object.size(); i++) {
+            GameObject ee = object.get(i);
+            if (ee.getId() == ID.Player) {
+                setUp(false);
+                setDown(false);
+                setRight(false);
+                setLeft(false);
+            }
+        }
     }
 
     public void ClearObjects() {

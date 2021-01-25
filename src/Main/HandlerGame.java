@@ -2,6 +2,7 @@ package Main;
 
 import Entity.Player;
 import GameObject.Camera;
+import GameObject.SpawnPointRoom;
 import Graphics.SpriteSheet;
 import Main.utils.FontStyle;
 import World.Generator;
@@ -20,15 +21,13 @@ public class HandlerGame {
         spr = new SpriteSheet("/SpriteSheet.png");
         grassspr=new SpriteSheet("/GrassSheet.png");
         font = new FontStyle();
-        cam = new Camera(0, 0);
-        gen=new Generator();
+        gen=new Generator(true,"Dungeon");
         level=gen.getLevel();
+        cam = level.getCamera();
         player=level.getPlayer();
     }
 
     public void tick() {
-
-
     }
 
     public void render(Graphics g) {

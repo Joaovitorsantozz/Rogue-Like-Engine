@@ -13,7 +13,7 @@ import Entity.particles.ParticleHandler;
 import GameObject.GameObject;
 import Main.HandlerGame;
 
-public class Tile extends GameObject implements Renderable {
+public 	class Tile extends GameObject implements Renderable {
 	private BufferedImage spr;
 	private TileType t;
 

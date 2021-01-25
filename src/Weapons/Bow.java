@@ -34,4 +34,5 @@ public class Bow extends WeaponBase implements Renderable {
         }
 
     }
+
 }

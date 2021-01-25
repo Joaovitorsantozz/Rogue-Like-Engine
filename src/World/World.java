@@ -5,13 +5,15 @@ import Entity.Global.TileType;
 
 import Entity.Global.ID;
 
-import Entity.Player;
-import Weapons.Sword;
+import GameObject.LevelItens.Grass;
+import GameObject.LevelItens.Pilar;
+import GameObject.LevelItens.Rock;
 import GameObject.GameObject;
 import Main.Game;
 import GameObject.SpawnPointRoom;
 
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 
 public class World {
@@ -74,18 +76,39 @@ public class World {
                 add(new Tile(xx * 32, yy * 32 + 32, ID.Block, TileType.Bricks));
                 add(new Tile(xx * 32, yy * 32 + 64, ID.Block, TileType.DownBrick));
             }
+
         }
         if (xx < getHeight() - 1 && xx > 0) {
-            if (yy > 2 && yy < getHeight() - 1) add(new Tile(xx * 32, yy * 32, ID.Floor, TileType.Floor));
+            int rand = new Random().nextInt(300);
+            if (yy > 2 && yy < getHeight() - 1){
+                if (Generator.room.equals("Grass")) {
+                    if (rand == 1) {
+                        if(yy>4&&yy<getHeight()-3)add(new Rock(xx * 32, yy * 32, ID.Decorate));
+                    }
+                    add(new Tile(xx * 32, yy * 32, ID.Floor, TileType.Grass));
+                }else if(Generator.room.equals("Dungeon")){
+                    add(new Tile(xx * 32, yy * 32, ID.Floor, TileType.Floor));
+                }
+            }
         }
 
         if (pa == 0xFF00FF21) {
-            add(new SpawnPointRoom(xx * 32, yy * 32, ID.GrassByome));
+            if(yy>3)add(new SpawnPointRoom(xx * 32, yy * 32, ID.Default));
+            else add(new SpawnPointRoom(xx * 32, yy * 32, ID.GrassPortal));
             if (xx == 0 || xx == getWidth() - 1) {
                 if (getPixel(xx, yy - 2) == 0xFFFFFFFF) {
                     add(new Tile(xx * 32, (yy - 2) * 32, ID.Block, TileType.Bricks));
-                    add(new Tile(xx * 32, (yy-1) * 32, ID.Block, TileType.Bricks));
+                    add(new Tile(xx * 32, (yy - 1) * 32, ID.Block, TileType.Bricks));
                 }
+            }
+        }
+        if(pa==0xFF808080){
+            add(new Pilar(xx*32,yy*32,ID.Block,new Random().nextInt(2)));
+        }
+        if(pa==0xFF3F7F47){
+            add(new Tile(xx*32,yy*32,ID.Floor,TileType.Grass));
+            if(new Random().nextInt(100)<30){
+                add(new Grass(xx*32,yy*32,ID.Default));
             }
         }
     }

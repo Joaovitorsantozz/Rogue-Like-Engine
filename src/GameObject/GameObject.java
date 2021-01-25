@@ -22,7 +22,6 @@ public abstract class GameObject {
 
 
 	public abstract Rectangle getBounds();
-
 	protected static Comparator<GameObject> nodeSorter = Comparator.comparingInt(n0 -> n0.depth);
 
 	public double calculateDistance(int x1, int y1, int x2, int y2) {
@@ -30,7 +29,7 @@ public abstract class GameObject {
 	}
 
 	public void DrawBounds(Graphics2D g2){
-		g2.setColor(Color.white);
+		g2.setColor(Color.red);
 		g2.draw(getBounds());
 	}
 	public void drawDefaultTex(Graphics g, BufferedImage sprite){

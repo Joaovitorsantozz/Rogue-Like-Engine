@@ -7,6 +7,7 @@ import Entity.Global.ID;
 import Entity.particles.ParticleHandler;
 import GameObject.GameObject;
 import GameObject.GameObjectHandler;
+import GameObject.LevelItens.ArchAltar;
 import Graphics.UI.Inventory;
 import Main.Game;
 import Main.HandlerGame;
@@ -56,17 +57,17 @@ public class Player extends GameObject implements Tickable, Renderable {
     }
 
     private void setItensByInventory() {
-        if(inventory.getObjectIndex(inventory.getOnslot())!=null){
-            if(this.equiped==null) {
+        if (inventory.getObjectIndex(inventory.getOnslot()) != null) {
+            if (this.equiped == null) {
                 this.equiped = inventory.getObjectIndex(inventory.getOnslot());
                 inventory.storage[inventory.getOnslot()].setOwner(HandlerGame.player);
-            }else{
+            } else {
                 this.equiped.setOwner(null);
                 this.equiped = inventory.getObjectIndex(inventory.getOnslot());
                 inventory.storage[inventory.getOnslot()].setOwner(HandlerGame.player);
             }
-        }else{
-            if(this.equiped!=null) {
+        } else {
+            if (this.equiped != null) {
                 this.equiped.setOwner(null);
                 this.equiped = null;
             }
@@ -76,8 +77,15 @@ public class Player extends GameObject implements Tickable, Renderable {
     protected void Col() {
         for (int i = 0; i < Game.handler.object.size(); i++) {
             GameObject e = Game.handler.object.get(i);
-            if (e.getId() == ID.Block) {
-                if (getBounds().intersects(e.getBounds())) {
+            if(!(e instanceof ArchAltar)) {
+                if (e.getId() == ID.Block) {
+                    if (getBounds().intersects(e.getBounds())) {
+                        x += velX * -1;
+                        y += velY * -1;
+                    }
+                }
+            }else{
+                if(getBounds().intersects(e.getBounds())||getBounds().intersects(((ArchAltar) e).getOtherBounds())){
                     x += velX * -1;
                     y += velY * -1;
                 }
@@ -131,6 +139,5 @@ public class Player extends GameObject implements Tickable, Renderable {
     public Rectangle getBounds() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
-
 
 }

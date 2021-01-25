@@ -1,28 +1,27 @@
 package Main;
 
 import Entity.Global.ID;
-import GameObject.GameObject;
 import GameObject.GameObjectHandler;
 import Main.utils.FontStyle;
-import Main.utils.LoadImage;
+import Main.utils.Text.FlashString;
 import Main.utils.Text.Text;
-import World.LevelSwitch;
+import World.Transition;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
     public static GameObjectHandler handler;
     private static final long serialVersionUID = 1L;
+
     private boolean isRunning;
     public int Frames, upd;
     public static final int W = 1230, H = 730;
     public static HandlerGame handlergame;
     public static Text text;
+    public static Transition tran=new Transition();
     public Game() {
-        new Windows(W, H, "Engine", this);
+        new Windows(W, H, "LRG", this);
         // Instancias
         handler = new GameObjectHandler();
         handlergame = new HandlerGame();
@@ -52,19 +51,11 @@ public class Game extends Canvas implements Runnable {
             if (hasFocus()) {
                 handler.update();
                 UpdateCam();
-                new LevelSwitch().upd();
                 handlergame.tick();
+
             }
             else{
-                for (int i = 0; i < handler.object.size(); i++) {
-                    GameObject ee = handler.object.get(i);
-                    if (ee.getId() == ID.Player) {
-                        handler.setUp(false);
-                        handler.setDown(false);
-                        handler.setRight(false);
-                        handler.setLeft(false);
-                    }
-                }
+               handler.resetKeys();
             }
         }
     }
@@ -97,6 +88,7 @@ public class Game extends Canvas implements Runnable {
                 g.fillRect(0, 0, W, H);
                 text.DrawText(g, Color.white, "Default");
             }
+            tran.drawTransition(g);
             ////////////////////////////////////////////
             g.dispose();
             bs.show();
