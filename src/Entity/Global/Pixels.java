@@ -5,4 +5,5 @@ public class Pixels {
     public static final int KEY=0xFFFFD800;
     public static final int DOOR=0xFF16100C;
     public static final int TILE=0xFFFFFFFF;
+    public static final int FLOOR=0xFF000000;
 }

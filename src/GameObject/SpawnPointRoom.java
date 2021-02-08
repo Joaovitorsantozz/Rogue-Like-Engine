@@ -12,6 +12,7 @@ import Main.Game;
 import Main.HandlerGame;
 import Main.KeyInput;
 import Main.utils.LoadImage;
+import Main.utils.Text.FlashString;
 import World.Generator;
 import World.Tile;
 
@@ -19,8 +20,8 @@ import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.awt.*;
 import java.util.Random;
-
-public class SpawnPointRoom extends GameObject implements Tickable{
+import Graphics.Transition;
+public class SpawnPointRoom extends GameObject implements Tickable,Renderable{
     public BufferedImage portal=new LoadImage("/Level/Gate.png").getImage();
     public SpawnPointRoom(int x, int y, ID id) {
         super(x, y, id);
@@ -35,6 +36,9 @@ public class SpawnPointRoom extends GameObject implements Tickable{
     @Override
     public void Update() {
         Collision();
+       // if(new Random().nextInt(100)<4)  new ParticleHandler().CreateParticlesOval(20,13,getX()+new Random().nextInt(10),getY()+new Random().nextInt(10), (float) new Random().nextInt(3)/2,
+       //         (float)new Random().nextInt(3)/2,Color.BLACK);
+
     }
 
     void Collision() {
@@ -45,6 +49,11 @@ public class SpawnPointRoom extends GameObject implements Tickable{
                     Game.tran.increase=true;
                     Arrays.fill(KeyInput.press, false);
                     if(Game.tran.alpha>250)HandlerGame.gen = new Generator(false,"Grass");
+                    if(this.getId()==ID.GrassPortal) {
+                        FlashString.restart = true;
+                        FlashString.start = true;
+                        Transition.canshowbyome=true;
+                    }
                     break;
                 }
             }
@@ -56,4 +65,12 @@ public class SpawnPointRoom extends GameObject implements Tickable{
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 
+    @Override
+    public void Render(Graphics g) {
+        if(getId()==ID.Default){
+            setDepth(Depth.LITTLE );
+            g.setColor(Color.red);
+            g.drawImage(new LoadImage("/GameObject/Transition.png").getImage(),getX(),getY(),32,32,null);
+        }
+    }
 }

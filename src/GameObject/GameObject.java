@@ -43,7 +43,7 @@ public abstract class GameObject {
 		if (hand.isLeft()) {velX = -speed;setDir(-1);}
 		else if(!hand.isRight())velX=0;
 
-		if(hand.isUp()){ velY=-speed;;}
+		if(hand.isUp()){ velY=-speed;}
 		else if(!hand.isDown())velY=0;
 
 		if(hand.isDown()){velY=speed;}
@@ -51,6 +51,7 @@ public abstract class GameObject {
 
 		return velX!=0|velY!=0;
 	}
+
 	public int getWidth() { return width; }
 	public void setWidth(int width) { this.width = width; }
 	public int getHeight() { return height; }

@@ -5,6 +5,7 @@ import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
 
+
 public class FontStyle {
 	public InputStream stream = FontStyle.class.getResourceAsStream("/Pixeboy.ttf");
 	public static Font font;
@@ -13,9 +14,9 @@ public class FontStyle {
 		try {
 			font = Font.createFont(Font.TRUETYPE_FONT, stream);
 		} catch (FontFormatException e) {
-			System.out.println("Formato não suportado" + e.getCause());
+			System.out.println("Formato nï¿½o suportado" + e.getCause());
 		} catch (IOException e) {
-			System.out.println("Não foi localizado a fonte" + e.getCause());
+			System.out.println("NÃ£o foi localizado a fonte" + e.getCause());
 			System.out.println(e);
 		}
 	}

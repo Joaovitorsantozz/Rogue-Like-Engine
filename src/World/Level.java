@@ -32,6 +32,8 @@ public class Level extends World {
                     player = new Player(xx * 32, yy * 32, ID.Player, Game.handler);
                     add(player);
                     camera=new Camera(xx*32,yy*32);
+                    if(Generator.room.equals("Grass"))add(new Tile(xx*32,yy*32,ID.Floor,TileType.Grass));
+                    else add(new Tile(xx*32,yy*32,ID.Floor,TileType.Floor));
                 }
             }
         }

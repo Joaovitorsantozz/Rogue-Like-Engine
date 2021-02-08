@@ -1,6 +1,7 @@
 package Main;
 
 import Entity.Global.ID;
+import Weapons.Bow;
 import Weapons.Sword;
 import GameObject.GameObject;
 
@@ -21,9 +22,11 @@ public class MouseMotion extends MouseAdapter {
             if(ee.getId()== ID.Weapon){
                 if(e.getButton()==MouseEvent.BUTTON1) {
                     handler.setAttack(true);
-
+                    Bow.mx=e.getX()+Game.handlergame.cam.getX();
+                    Bow.my=e.getY()+Game.handlergame.cam.getY();
                 }
             }
+
         }
     }
 
@@ -55,6 +58,8 @@ public class MouseMotion extends MouseAdapter {
                 ((Sword) ee).rx=e.getX()+Game.handlergame.cam.getX();
                 ((Sword) ee).ry=e.getY()+Game.handlergame.cam.getY();
             }
+            Bow.mx=e.getX()+Game.handlergame.cam.getX();
+            Bow.my=e.getY()+Game.handlergame.cam.getY();
         }
     }
 }

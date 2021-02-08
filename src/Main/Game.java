@@ -3,9 +3,9 @@ package Main;
 import Entity.Global.ID;
 import GameObject.GameObjectHandler;
 import Main.utils.FontStyle;
-import Main.utils.Text.FlashString;
+import Main.utils.LoadImage;
 import Main.utils.Text.Text;
-import World.Transition;
+import Graphics.Transition;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -75,7 +75,7 @@ public class Game extends Canvas implements Runnable {
                 this.createBufferStrategy(3);
                 return;
             }
-            // setCursor(getToolkit().createCustomCursor(new LoadImage("/Aim.png").getImage(),new Point(0,0),"cursor"));
+            setCursor(getToolkit().createCustomCursor(new LoadImage("/Aim.png").getImage(),new Point(0,0),"cursor"));
             Graphics g = bs.getDrawGraphics();
             g.setColor(Color.black);
             g.fillRect(0, 0, W, H);

@@ -26,10 +26,9 @@ public class Player extends GameObject implements Tickable, Renderable {
     public float speed = 5f;
     private BufferedImage spr = new LoadImage("/GameObject/Player.png").getImage(), anim[], idle[];
     Animator an;
-    public WeaponBase equiped, lastEquiped;
+    public WeaponBase equiped;
     public Inventory inventory = Game.handler.uiHandler.inv;
-    boolean add = true;
-
+    public boolean attack;
     public Player(int x, int y, ID id, GameObjectHandler hand) {
         super(x, y, id);
         // TODO Auto-generated constructor stub
@@ -42,7 +41,7 @@ public class Player extends GameObject implements Tickable, Renderable {
         anim = new LoadImage("/GameObject/Player.png").CutHor(3, 0, 0, 16, 16, spr);
         idle = new LoadImage("/GameObject/Player.png").CutHor(3, 0, 16, 16, 16, spr);
         //////////////////
-
+        inventory.setItem(1,new Bow(inventory.getX(),inventory.getY(),10,ID.Weapon));
     }
 
     @Override

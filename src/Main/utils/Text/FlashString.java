@@ -34,7 +34,6 @@ public class FlashString extends Effect {
     }
 
     public void FadeOut(Graphics g, String text) {
-        BufferedImage back=new LoadImage("/UI/LevelHolder.png").getImage();
         if (start) {
             cur++;
             decrease = true;
@@ -50,10 +49,10 @@ public class FlashString extends Effect {
             setAlpha(255);
             cur=0;
         }
-        if(alpha>10)g.drawImage(back,x-50,y-150,back.getWidth()*10,back.getHeight()*10  ,null);
         g.setFont(font);
         g.setColor(new Color(255, 255, 255, getAlpha()));
         g.drawString(text, x, y-20);
+        if(alpha>10)g.drawImage(new LoadImage("/UI/Bar.png").getImage(), 330, 300, 64 * 9, 4, null);
     }
 
     public int getAlpha() {

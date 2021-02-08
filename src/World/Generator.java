@@ -30,25 +30,29 @@ public class Generator {
                 case 1 -> {
                     Game.handler.ClearObjects();
                     random = rand.nextInt(templates.bottom.length);
-                    setActualLevel(HandlerGame.level=new Level(templates.bottom[random]));
+                    HandlerGame.level = new Level(templates.bottom[random]);
+                    setActualLevel(HandlerGame.level);
                     getLevel().setWidth((templates.bottom[random].getWidth()));
                 }
                 case 2 -> {
                     Game.handler.ClearObjects();
                     random = rand.nextInt(templates.top.length);
-                    setActualLevel(HandlerGame.level=new Level(templates.top[random]));
+                    HandlerGame.level = new Level(templates.top[random]);
+                    setActualLevel(HandlerGame.level);
                     getLevel().setWidth((templates.top[random].getWidth()));
                 }
                 case 3 -> {
                     Game.handler.ClearObjects();
                     random = rand.nextInt(templates.left.length);
-                    setActualLevel(HandlerGame.level=new Level(templates.left[random]));
+                    HandlerGame.level = new Level(templates.top[random]);
+                    setActualLevel(HandlerGame.level);
                     getLevel().setWidth((templates.left[random].getWidth()));
                 }
                 case 4 -> {
                     Game.handler.ClearObjects();
                     random = rand.nextInt(templates.right.length);
-                    setActualLevel(HandlerGame.level=new Level(templates.right[random]));
+                    HandlerGame.level = new Level(templates.top[random]);
+                    setActualLevel(HandlerGame.level);
                     getLevel().setWidth((templates.right[random].getWidth()));
                 }
             }
