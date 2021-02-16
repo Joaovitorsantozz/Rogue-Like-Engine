@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import GameObject.GameObjectHandler;
 public abstract class WeaponBase extends GameObject {
     protected BufferedImage weapon;
-    private int damage;
+    public int damage;
     public GameObject owner;
     public GameObjectHandler handler;
     public WeaponBase(int x, int y, int damage, ID id) {

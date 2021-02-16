@@ -15,5 +15,6 @@ public enum ID {
 	Bow(),
 	Decorate(),
 	GrassPortal(),
-	Enemy();
+	Enemy(),
+	Bullet();
 }

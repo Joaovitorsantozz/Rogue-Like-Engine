@@ -66,6 +66,7 @@ public class GameObjectHandler {
     public void ClearObjects() {
         particles.clear();
         object.clear();
+
     }
 
     public void add(GameObject obj) {

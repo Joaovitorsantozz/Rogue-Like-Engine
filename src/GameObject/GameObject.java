@@ -35,7 +35,9 @@ public abstract class GameObject {
 	public void drawDefaultTex(Graphics g, BufferedImage sprite){
 		g.drawImage(sprite,getX(),getY(),getWidth(),getHeight(),null);
 	}
-
+	public void drawDefaultTexInv(Graphics g,BufferedImage sprite){
+		g.drawImage(sprite,getX()+getWidth(),getY(),getWidth()*-1,getHeight(),null);
+	}
 	public boolean Move(GameObjectHandler hand, float speed){
 		if (hand.isRight()) {velX = speed;setDir(1);}
 		else if(!hand.isLeft())velX=0;

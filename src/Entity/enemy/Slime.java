@@ -1,28 +1,37 @@
 package Entity.enemy;
 
+import EngineInterfaces.LivingEntity;
 import EngineInterfaces.Renderable;
 import EngineInterfaces.Tickable;
 import Entity.Global.Depth;
 import Entity.Global.ID;
+import Entity.particles.ParticleHandler;
 import GameObject.GameObject;
 import Main.Game;
+import Main.HandlerGame;
 import Main.utils.Animator;
 import Main.utils.LoadImage;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
+
 import GameObject.GameObjectHandler;
-public class Slime extends GameObject implements Tickable, Renderable {
+
+public class Slime extends GameObject implements Tickable, Renderable, LivingEntity {
     private Animator anim;
     private BufferedImage spr = new LoadImage("/GameObject/Enemy/Slime.png").getImage();
     private BufferedImage[] animation = new LoadImage(null).Cut(10, 0, 0, 16, 16, spr);
-    private float speed =2.2f;
-    private GameObjectHandler hand=new GameObjectHandler();
+    private float speed = 2.2f;
+    public int life = 25;
+    private boolean isdamage;
+    int cur;
+    private GameObjectHandler hand = new GameObjectHandler();
     public Slime(int x, int y, ID id) {
         super(x, y, id);
         anim = new Animator(2, 10);
         anim.setAnimation(animation);
-        setDepth(Depth.MEDIUM+10);
+        setDepth(Depth.MEDIUM + 10);
         setWidth(16 * 3);
         setHeight(16 * 3);
     }
@@ -34,7 +43,17 @@ public class Slime extends GameObject implements Tickable, Renderable {
 
     @Override
     public void Render(Graphics g) {
-        drawDefaultTex(g, anim.getAnimation());
+        if (!isdamage) {
+            drawDefaultTex(g, anim.getAnimation());
+        } else {
+            cur++;
+            if(cur<5) {
+                drawDefaultTex(g, spr.getSubimage(0, spr.getHeight() - 16, 16, 16));
+            }else{
+                isdamage=false;
+                cur=0;
+            }
+        }
     }
 
     @Override
@@ -42,18 +61,24 @@ public class Slime extends GameObject implements Tickable, Renderable {
         x += velX;
         y += velY;
         Collision();
-        Move();
+        if (life <= 0) {
+            Game.handler.DeleteObject(this);
+            Game.handlergame.cam.setX(Game.handlergame.cam.getX() + new Random().nextInt(40));
+            Game.handlergame.cam.setY(Game.handlergame.cam.getY() + new Random().nextInt(40));
+            new ParticleHandler().CreateParticlesImage(20,25,getX(),getY(),
+                    new Random().nextFloat()*2,new Random().nextFloat()*2, HandlerGame.spr.getSprite(5,83,6,6));
+        }
     }
 
     private void Move() {
         for (int i = 0; i < Game.handler.object.size(); i++) {
-            GameObject ee=Game.handler.object.get(i);
-            if(ee.getId()==ID.Player){
-              if(this.getX()<ee.getX())velX=speed;
-              else if(this.getX()>ee.getX())velX=-speed;
+            GameObject ee = Game.handler.object.get(i);
+            if (ee.getId() == ID.Player) {
+                if (this.getX() < ee.getX()) velX = speed;
+                else if (this.getX() > ee.getX()) velX = -speed;
 
-              if(this.getY()<ee.getY())velY=speed;
-              else if(this.getY()>ee.getY())velY=-speed;
+                if (this.getY() < ee.getY()) velY = speed;
+                else if (this.getY() > ee.getY()) velY = -speed;
 
             }
         }
@@ -67,9 +92,15 @@ public class Slime extends GameObject implements Tickable, Renderable {
                     x += velX * -1;
                     y += velY * -1;
                 }
+            } else if (ee.getId() == ID.Bullet) {
+                if (ee.getBounds().intersects(getBounds())) {
+                    life -= 5;
+                    isdamage = true;
+                    Game.handler.object.remove(ee);
+                }
             }
-            if(ee.getId()==ID.Enemy){
-                if(ee==this){
+            if (ee.getId() == ID.Enemy) {
+                if (ee == this) {
                     continue;
                 }
                 if (ee.getBounds().intersects(getBounds())) {

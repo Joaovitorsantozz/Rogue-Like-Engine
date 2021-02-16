@@ -11,7 +11,7 @@ import java.awt.event.MouseWheelEvent;
 import GameObject.GameObjectHandler;
 public class MouseMotion extends MouseAdapter {
     public GameObjectHandler handler;
-
+    public static double mouseX,mouseY;
     public MouseMotion(GameObjectHandler hand){this.handler=hand;}
 
     public void mouseClicked(MouseEvent e) {}
@@ -60,6 +60,8 @@ public class MouseMotion extends MouseAdapter {
             }
             Bow.mx=e.getX()+Game.handlergame.cam.getX();
             Bow.my=e.getY()+Game.handlergame.cam.getY();
+            mouseX=e.getX()+Game.handlergame.cam.getX();
+            mouseY=e.getY()+Game.handlergame.cam.getY();
         }
     }
 }

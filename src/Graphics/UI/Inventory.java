@@ -7,6 +7,7 @@ import GameObject.GameObject;
 import Main.Game;
 import Main.HandlerGame;
 import Main.utils.LoadImage;
+import Weapons.Staff;
 import Weapons.WeaponBase;
 
 import javax.print.attribute.HashAttributeSet;
@@ -42,9 +43,8 @@ public class Inventory extends UI implements InventoryInterface {
 
             }
             if (getObjectIndex(i) != null) {
-                g.drawImage(storage[i].getSpr(), getX() + (i - 1) * 50, getY(), 48, 48, null);
+                g.drawImage(storage[i].getSpr(), getX()+8 + ((i - 1)) * 50, getY()+12, 32, 32, null);
             }
-
 
         }
     }

@@ -8,6 +8,7 @@ import Entity.particles.ParticleHandler;
 import GameObject.GameObject;
 import Main.Game;
 import Main.HandlerGame;
+import Main.MouseMotion;
 import Main.utils.Animator;
 import Main.utils.LoadImage;
 
@@ -16,7 +17,7 @@ import java.awt.image.BufferedImage;
 
 public class Sword extends WeaponBase implements Tickable, Renderable {
     private BufferedImage sword = HandlerGame.spr.getSprite(0, 48, 16, 16);
-    Animator anim = new Animator(10, 4);
+    Animator anim = new Animator(4, 4);
     BufferedImage sheet = new LoadImage("/GameObject/Attack/atc.png").getImage(), anima[];
     private boolean attack;
     public double rx = 0, ry = 0;
@@ -46,13 +47,7 @@ public class Sword extends WeaponBase implements Tickable, Renderable {
                 setY(owner.getY());
             }
             DrawAttack(g);
-            //  g.fillRect(owner.getX()+owner.getWidth(),owner.getY(),16,16);
-            //  g.fillRect(owner.getX()-owner.getWidth() ,owner.getY(),16,16);
-                g.fillRect(owner.getX()+14,owner.getY(),16,16);
-                g.fillRect((int)rx,(int)ry,16,16);
-                g.fillRect(getX(),getY(),4,4);
         }
-
     }
 
     private void DrawAttack(Graphics g) {
@@ -72,14 +67,23 @@ public class Sword extends WeaponBase implements Tickable, Renderable {
 
     @Override
     public void Update() {
-        Attack();
+        if(owner!=null)Attack();
     }
 
     @Override
     public void Attack() {
         if (this.handler.isAttack()) {
-            attack = true;
-            handler.setAttack(false);
+            if(owner.getDir()==1) {
+                if(MouseMotion.mouseX >owner.getX()) {
+                    attack = true;
+                    handler.setAttack(false);
+                }
+            }else if(owner.getDir()==-1){
+                if(MouseMotion.mouseX<owner.getX()) {
+                    attack = true;
+                    handler.setAttack(false);
+                }
+            }
         }
         if (attack) {
             if (anim.getIndex() == 3) {

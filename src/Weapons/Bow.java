@@ -25,32 +25,39 @@ public class Bow extends WeaponBase implements Renderable, Tickable {
 
     @Override
     public void Attack() {
+
         if (handler.isAttack()) {
             handler.setAttack(false);
             float dx = (float) Math.cos(angle);
             float dy = (float) Math.sin(angle);
-            handler.add(new Arrow((owner.getX()+4)*owner.getDir(),owner.getY()+16, ID.Default, dx, dy, angle + 90));
+            if (owner.getDir() == 1) {
+               // if(mx>owner.getX())
+             //   handler.add(new Arrow((int) (getX() + getWidth() / 2f), (int) (getY() + getHeight() / 2f), ID.Default, dx, dy, angle + 90));
+            } else if (owner.getDir() == -1) {
+              //  if(mx<owner.getX())
+              //  handler.add(new Arrow((int) (getX() + getWidth() / 2f), (int) (getY() + getHeight() / 2f), ID.Default, dx, dy, angle + 90));
+            }
         }
     }
 
     @Override
     public void Render(Graphics g) {
+        double angle2 = (Math.atan2(my - this.getY(), mx - this.getX()) * (360 / Math.PI * 2));
         if (owner != null) {
-            angle = Math.atan2(my - this.getY(), mx - this.getX());
-            setX(owner.getX()+48);
-            setY(owner.getY()+24);
-            ((Graphics2D) g).rotate(angle, getX()-getWidth()/2f, getY());
-            drawDefaultTex(g, sprite);
-            g.fillRect((owner.getX()+4)*owner.getDir(),owner.getY()+16,16,16);
-            ((Graphics2D) g).rotate(-angle, getX()-getWidth()/2f, getY());
-            System.out.println(angle);
-
+            setY(owner.getY() + 4);
+            if (owner.getDir() == 1) {
+                drawDefaultTex(g, sprite);
+                setX(owner.getX() + 48);
+            } else if (owner.getDir() == -1) {
+                drawDefaultTexInv(g, sprite);
+                setX(owner.getX() - 48);
+            }
         }
     }
 
     @Override
     public void Update() {
-        angle=Math.atan2(my-this.getY(),mx-this.getX());
-        Attack();
+        angle = Math.atan2(my - this.getY(), mx - this.getX());
+        if(owner!=null)Attack();
     }
 }

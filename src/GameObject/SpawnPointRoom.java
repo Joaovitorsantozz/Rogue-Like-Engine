@@ -4,25 +4,23 @@ import EngineInterfaces.Renderable;
 import EngineInterfaces.Tickable;
 import Entity.Global.Depth;
 import Entity.Global.ID;
-import Entity.Global.TileType;
-import Entity.particles.ParticleHandler;
 import GameObject.LevelItens.ArchAltar;
-import GameObject.LevelItens.Pilar;
+import Graphics.Transition;
 import Main.Game;
 import Main.HandlerGame;
 import Main.KeyInput;
 import Main.utils.LoadImage;
 import Main.utils.Text.FlashString;
 import World.Generator;
-import World.Tile;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-import java.awt.*;
-import java.util.Random;
-import Graphics.Transition;
+
 public class SpawnPointRoom extends GameObject implements Tickable,Renderable{
     public BufferedImage portal=new LoadImage("/Level/Gate.png").getImage();
+    private int time;
+    private boolean switchLevel;
     public SpawnPointRoom(int x, int y, ID id) {
         super(x, y, id);
         setWidth(16 * 3);
@@ -38,7 +36,11 @@ public class SpawnPointRoom extends GameObject implements Tickable,Renderable{
         Collision();
        // if(new Random().nextInt(100)<4)  new ParticleHandler().CreateParticlesOval(20,13,getX()+new Random().nextInt(10),getY()+new Random().nextInt(10), (float) new Random().nextInt(3)/2,
        //         (float)new Random().nextInt(3)/2,Color.BLACK);
+        if(switchLevel){
+            if(Game.tran.decrease){
 
+            }
+        }
     }
 
     void Collision() {
@@ -54,9 +56,11 @@ public class SpawnPointRoom extends GameObject implements Tickable,Renderable{
                         FlashString.start = true;
                         Transition.canshowbyome=true;
                     }
+                    //Game.handler.object.remove(this);
                     break;
                 }
             }
+
         }
     }
 

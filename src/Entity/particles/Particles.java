@@ -23,10 +23,10 @@ public class Particles extends GameObject implements Tickable, Renderable {
     public int alpha=250;
     boolean oval;
     double rotate;
-    public Particles(int x, int y,float velX,float velY,int life,Color color,ID id,BufferedImage part) {
+    public  Particles(int x, int y,int width,float velX,float velY,int life,Color color,ID id,BufferedImage part) {
         super(x, y, id);
         this.setDepth(Depth.HIGHT+3);
-        setWidth(8+new Random().nextInt(8));
+        setWidth(width+new Random().nextInt(width));
         setHeight(getWidth());
         dx=new Random().nextGaussian();
         dy=new Random().nextGaussian();

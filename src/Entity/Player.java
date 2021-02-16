@@ -14,6 +14,7 @@ import Main.HandlerGame;
 import Main.utils.Animator;
 import Main.utils.LoadImage;
 import Weapons.Bow;
+import Weapons.Staff;
 import Weapons.Sword;
 import Weapons.WeaponBase;
 
@@ -41,7 +42,7 @@ public class Player extends GameObject implements Tickable, Renderable {
         anim = new LoadImage("/GameObject/Player.png").CutHor(3, 0, 0, 16, 16, spr);
         idle = new LoadImage("/GameObject/Player.png").CutHor(3, 0, 16, 16, 16, spr);
         //////////////////
-        inventory.setItem(1,new Bow(inventory.getX(),inventory.getY(),10,ID.Weapon));
+        inventory.setItem(1,new Staff(inventory.getX(),inventory.getY()+5,10,ID.Weapon));
     }
 
     @Override
@@ -51,7 +52,6 @@ public class Player extends GameObject implements Tickable, Renderable {
         // Call Methods//
         Col();
         Move(this.hand, speed);
-
         setItensByInventory();
     }
 
@@ -59,11 +59,11 @@ public class Player extends GameObject implements Tickable, Renderable {
         if (inventory.getObjectIndex(inventory.getOnslot()) != null) {
             if (this.equiped == null) {
                 this.equiped = inventory.getObjectIndex(inventory.getOnslot());
-                inventory.storage[inventory.getOnslot()].setOwner(HandlerGame.player);
+                inventory.storage[inventory.getOnslot()].setOwner(this);
             } else {
                 this.equiped.setOwner(null);
                 this.equiped = inventory.getObjectIndex(inventory.getOnslot());
-                inventory.storage[inventory.getOnslot()].setOwner(HandlerGame.player);
+                inventory.storage[inventory.getOnslot()].setOwner(this);
             }
         } else {
             if (this.equiped != null) {
@@ -111,25 +111,27 @@ public class Player extends GameObject implements Tickable, Renderable {
     }
 
     private void CreateParticles() {
+        BufferedImage part=HandlerGame.spr.getSprite(5,83,6,6);
+        int maxParticles=15;
         if (hand.isRight()) {
-            if (new Random().nextInt(100) < 10) {
-                new ParticleHandler().CreateParticlesOval(2, 10, getX() + new Random().nextInt(10)
-                        , getY() + getHeight() - 10, 0, getDir() / 10F, Color.white);
+            if (new Random().nextInt(100) < maxParticles) {
+                new ParticleHandler().CreateParticlesImage(2, 10, getX() + new Random().nextInt(10)
+                        , getY() + getHeight() - 10, 0, getDir() / 10F, part);
             }
         } else if (hand.isLeft()) {
-            if (new Random().nextInt(100) < 10) {
-                new ParticleHandler().CreateParticlesOval(2, 10, (getX() + getWidth()) + new Random().nextInt(10)
-                        , getY() + getHeight() - 10, 0, getDir() / 10F, Color.white);
+            if (new Random().nextInt(100) <maxParticles) {
+                new ParticleHandler().CreateParticlesImage(2, 10, (getX() + getWidth()) + new Random().nextInt(10)
+                        , getY() + getHeight() - 10, 0, getDir() / 10F,part);
             }
         } else if (hand.isUp()) {
-            if (new Random().nextInt(100) < 10) {
-                new ParticleHandler().CreateParticlesOval(2, 10, (getX() + 5) + new Random().nextInt(10)
-                        , getY() + getHeight() - 10, 0, getDir() / 10F, Color.white);
+            if (new Random().nextInt(100) <maxParticles) {
+                new ParticleHandler().CreateParticlesImage(2, 10, (getX() + 5) + new Random().nextInt(10)
+                        , getY() + getHeight() - 10, 0, getDir() / 10F,part);
             }
         } else if (hand.isDown()) {
-            if (new Random().nextInt(100) < 10) {
-                new ParticleHandler().CreateParticlesOval(2, 10, getX() + new Random().nextInt(10)
-                        , getY() - 10, 0, getDir() / 10F, Color.white);
+            if (new Random().nextInt(100) <maxParticles) {
+                new ParticleHandler().CreateParticlesImage(2, 10, getX() + new Random().nextInt(10)
+                        , getY() - 10, 0, getDir() / 10F,part);
             }
         }
     }

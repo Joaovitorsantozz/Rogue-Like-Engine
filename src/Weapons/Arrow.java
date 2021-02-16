@@ -9,17 +9,18 @@ import Main.Game;
 import Main.HandlerGame;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Arrow extends GameObject implements Tickable, Renderable {
     public double angle;
     public int speed = 10;
     public int life;
 
-    public Arrow(int x, int y, ID id, double dx, double dy, double angle) {
+    public Arrow(int x, int y, ID id, double dx, double dy, double angle, BufferedImage bullet) {
         super(x, y, id);
         this.velX = (float) dx;
         this.velY = (float) dy;
-        this.spr = HandlerGame.spr.getSprite(32, 48, 16, 16);
+        this.spr = bullet;
         setWidth(16 * 3);
         setHeight(16 * 3);
         setDepth(Depth.MEDIUM);
@@ -33,8 +34,9 @@ public class Arrow extends GameObject implements Tickable, Renderable {
 
     @Override
     public void Render(Graphics g) {
-        g.setColor(Color.gray);
-        g.fillOval(getX(), getY(), 16, 16);
+        ((Graphics2D)g).rotate(angle,getX()+getWidth()/2f,getY()+getHeight()/2f);
+        drawDefaultTex(g,spr);
+        ((Graphics2D)g).rotate(-angle,getX()+getWidth()/2f,getY()+getHeight()/2f);
     }
 
     @Override
