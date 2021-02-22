@@ -72,7 +72,7 @@ public class MagicBullet extends WeaponBase implements Renderable, Tickable {
             GameObject ee = Game.handler.object.get(i);
             if (ee.getId() == ID.Block) {
                 if (getBounds().intersects(ee.getBounds())) {
-                    new ParticleHandler().CreateParticlesRect(20,15,getX(),getY(),4,
+                    new ParticleHandler().CreateParticlesRectPerfect(70,15,getX(),getY(),4,
                             new Random().nextFloat(),new Random().nextFloat(),new Color(104,194,211));
                     Game.handler.object.remove(this);
                 }

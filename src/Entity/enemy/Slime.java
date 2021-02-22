@@ -60,13 +60,15 @@ public class Slime extends GameObject implements Tickable, Renderable, LivingEnt
     public void Update() {
         x += velX;
         y += velY;
+        Move();
         Collision();
+        Move(hand,speed);
         if (life <= 0) {
             Game.handler.DeleteObject(this);
             Game.handlergame.cam.setX(Game.handlergame.cam.getX() + new Random().nextInt(40));
             Game.handlergame.cam.setY(Game.handlergame.cam.getY() + new Random().nextInt(40));
             new ParticleHandler().CreateParticlesImage(20,25,getX(),getY(),
-                    new Random().nextFloat()*2,new Random().nextFloat()*2, HandlerGame.spr.getSprite(5,83,6,6));
+                    new Random().nextFloat()*2,new Random().nextFloat()*2, HandlerGame.spr.getSprite(37,83,6,6));
         }
     }
 
@@ -74,12 +76,10 @@ public class Slime extends GameObject implements Tickable, Renderable, LivingEnt
         for (int i = 0; i < Game.handler.object.size(); i++) {
             GameObject ee = Game.handler.object.get(i);
             if (ee.getId() == ID.Player) {
-                if (this.getX() < ee.getX()) velX = speed;
-                else if (this.getX() > ee.getX()) velX = -speed;
-
-                if (this.getY() < ee.getY()) velY = speed;
-                else if (this.getY() > ee.getY()) velY = -speed;
-
+                hand.setRight(this.getX() < ee.getX());
+                hand.setLeft(this.getX() > ee.getX());
+                hand.setDown(this.getY() < ee.getY());
+                hand.setUp(this.getY() > ee.getY());
             }
         }
     }
@@ -103,7 +103,7 @@ public class Slime extends GameObject implements Tickable, Renderable, LivingEnt
                 if (ee == this) {
                     continue;
                 }
-                if (ee.getBounds().intersects(getBounds())) {
+                if (getBounds().intersects(ee.getBounds())) {
                     x += velX * -1;
                     y += velY * -1;
                 }

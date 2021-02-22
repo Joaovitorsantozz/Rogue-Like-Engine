@@ -20,7 +20,7 @@ public class Trees extends GameObject implements Renderable {
         this.spr=imgs[tex];
         setWidth(spr.getWidth()*3);
         setHeight(spr.getHeight()*3);
-        setDepth(Depth.MEDIUM);
+        setDepth(Depth.HIGHT);
 
     }
 

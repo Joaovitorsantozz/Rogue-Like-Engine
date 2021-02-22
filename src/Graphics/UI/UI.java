@@ -4,8 +4,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class UI {
-    private int x, y;
+    protected int x, y;
     private int width,height;
+
     public UI(int x, int y) {
         this.x = x;
         this.y = y;
@@ -15,8 +16,8 @@ public abstract class UI {
 
     public abstract void update();
 
-    public abstract void drawComponents(Graphics g);
-
+    public void drawComponents(Graphics g){
+    }
     public int getX() { return x; }
 
     public void setX(int x) { this.x = x; }

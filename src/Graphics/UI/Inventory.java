@@ -24,6 +24,8 @@ public class Inventory extends UI implements InventoryInterface {
 
     public Inventory(int x, int y, UIHandler handler) {
         super(x, y);
+        this.setX(x);
+        this.setY(y);
         this.handler = handler;
         storage = new WeaponBase[maxSize + 1];
         icon = new BufferedImage[storage.length];
@@ -37,9 +39,9 @@ public class Inventory extends UI implements InventoryInterface {
     public void drawComponents(Graphics g) {
 
         for (int i = 0; i < maxSize; i++) {
-            handler.drawTexWithOffset(g, hotbar, i * 50);
+            handler.drawTexWithOffset(g, hotbar, i * 50,this);
             if (i == onslot - 1) {
-                handler.drawTexWithOffset(g, new LoadImage("/UI/FocusSlot.png").getImage(), i * 50);
+                handler.drawTexWithOffset(g, new LoadImage("/UI/FocusSlot.png").getImage(), i * 50,this);
 
             }
             if (getObjectIndex(i) != null) {

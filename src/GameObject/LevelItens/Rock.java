@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Rock extends GameObject implements Renderable {
-    public BufferedImage rock= HandlerGame.grassspr.getSprite(40,0,19,16);
+    public BufferedImage rock= HandlerGame.grassspr.getSprite(36,0,24,23);
     public Rock(int x, int y, ID id) {
         super(x, y, id);
         this.spr=rock;
@@ -21,7 +21,7 @@ public class Rock extends GameObject implements Renderable {
 
     @Override
     public Rectangle getBounds() {
-        return null;
+        return new Rectangle(getX(),getY(),getWidth(),getHeight());
     }
     public Rectangle[] getOtherBounds(){return null;}
     @Override

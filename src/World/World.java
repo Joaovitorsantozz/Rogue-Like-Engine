@@ -93,25 +93,8 @@ public class World {
     private void setTiles(int xx, int yy, int pa) {
         if (pa == 0xFF11502C) {
             add(new Tile(xx * 32, yy * 32, ID.Block, TileType.DarkGrass));
-            if (xx == 2) {
-                if (new Random().nextInt(100) < 30) {
-                    add(new Trees(xx * 32, yy * 32, ID.Block, new Random().nextInt(2)));
-                }
-            }
-            if (xx == getWidth() - 2) {
-                if (new Random().nextInt(100) < 30) {
-                    add(new Trees((xx - 1) * 32, yy * 32, ID.Block, new Random().nextInt(2)));
-                }
-            }
-            if (yy == getHeight() - 1) {
-                if (new Random().nextInt(100) < 30) {
-                    add(new Trees((xx) * 32, (yy -3) * 32, ID.Block, new Random().nextInt(2)));
-                }
-            }
-            if (yy == 2) {
-                if (new Random().nextInt(100) < 30) {
-                    add(new Trees((xx) * 32, (yy-3) * 32, ID.Block, new Random().nextInt(2)));
-                }
+            if(new Random().nextInt(100)<5){
+                add(new Trees((xx) * 32, (yy-3) * 32, ID.Block, new Random().nextInt(2)));
             }
         }
 
@@ -192,7 +175,7 @@ public class World {
                 if(xx>5&&xx<getWidth()-6) {
                     if (yy > 5 && yy < getHeight() - 6) {
                         if (rand == 11) {
-                            add(new Rock(xx * 32, yy * 32, ID.Decorate));
+                            add(new Rock(xx * 32, yy * 32, ID.Block));
                         } else if (rand < 10) {
                             add(new Grass(xx * 32, yy * 32, ID.Decorate));
                         }

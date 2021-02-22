@@ -18,15 +18,17 @@ import java.util.Random;
 public class Particles extends GameObject implements Tickable, Renderable {
     Color color;
     public int life;
-    private double dx,dy;
+    private double dx=2,dy=2;
     public BufferedImage particle;
     public int alpha=250;
     boolean oval;
     double rotate;
-    public  Particles(int x, int y,int width,float velX,float velY,int life,Color color,ID id,BufferedImage part) {
+    private Random r=new Random();
+    public Particles(int x, int y,int width,float velX,float velY,int life,Color color,ID id,BufferedImage part,boolean iw) {
         super(x, y, id);
         this.setDepth(Depth.HIGHT+3);
-        setWidth(width+new Random().nextInt(width));
+        if(iw) setWidth(width + new Random().nextInt(width));
+        else setWidth(width);
         setHeight(getWidth());
         dx=new Random().nextGaussian();
         dy=new Random().nextGaussian();
@@ -41,8 +43,8 @@ public class Particles extends GameObject implements Tickable, Renderable {
     public void Update() {
         life--;
         if(life<0)Game.handler.particles.remove(this);
-        x+=velX*dx;
-        y+=velY*dy;
+        x+=dx*velX;
+        y+=dy*velY;
         if(alpha>0) alpha--;
     }
 
