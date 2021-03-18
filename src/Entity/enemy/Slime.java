@@ -34,6 +34,8 @@ public class Slime extends GameObject implements Tickable, Renderable, LivingEnt
         setDepth(Depth.MEDIUM + 10);
         setWidth(16 * 3);
         setHeight(16 * 3);
+        this.velX=2;
+        this.velY=2;
     }
 
     @Override
@@ -58,8 +60,7 @@ public class Slime extends GameObject implements Tickable, Renderable, LivingEnt
 
     @Override
     public void Update() {
-        x += velX;
-        y += velY;
+ 
         Move();
         Collision();
         Move(hand,speed);
@@ -76,10 +77,11 @@ public class Slime extends GameObject implements Tickable, Renderable, LivingEnt
         for (int i = 0; i < Game.handler.object.size(); i++) {
             GameObject ee = Game.handler.object.get(i);
             if (ee.getId() == ID.Player) {
-                hand.setRight(this.getX() < ee.getX());
-                hand.setLeft(this.getX() > ee.getX());
-                hand.setDown(this.getY() < ee.getY());
-                hand.setUp(this.getY() > ee.getY());
+              if(getX()<ee.getX())x+=velX;
+              else if(getX()>ee.getX())x-=velX;
+              
+              if(getY()>ee.getY())y-=velY;
+              else y+=velY;
             }
         }
     }

@@ -6,6 +6,7 @@ import Entity.Global.Depth;
 import Entity.Global.ID;
 import Entity.particles.ParticleHandler;
 import GameObject.GameObject;
+import GameObject.LevelItens.Pilar;
 import Main.Game;
 import Main.HandlerGame;
 import Main.utils.Animator;
@@ -57,7 +58,7 @@ public class MagicBullet extends WeaponBase implements Renderable, Tickable {
         x += speed * velX;
         y += speed * velY;
         if (new Random().nextInt(100) < 30) {
-            new ParticleHandler().CreateParticlesImage(2, 10, getX() + new Random().nextInt(30)
+            new ParticleHandler().CreateParticlesImage(10, 10, getX() + new Random().nextInt(30)
                     , getY() - new Random().nextInt(30), 0, getDir() / 10F, HandlerGame.spr.getSprite(22, 83, 6, 6));
         }
         life++;
@@ -70,7 +71,7 @@ public class MagicBullet extends WeaponBase implements Renderable, Tickable {
     private void Collision() {
         for (int i = 0; i < Game.handler.object.size(); i++) {
             GameObject ee = Game.handler.object.get(i);
-            if (ee.getId() == ID.Block) {
+            if (ee.getId() == ID.Block&&!(ee instanceof Pilar)) {
                 if (getBounds().intersects(ee.getBounds())) {
                     new ParticleHandler().CreateParticlesRectPerfect(70,15,getX(),getY(),4,
                             new Random().nextFloat(),new Random().nextFloat(),new Color(104,194,211));

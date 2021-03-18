@@ -64,6 +64,35 @@ public class World {
 
     public void BitMap(int xx, int yy, int pa) {
         setTiles(xx, yy, pa);
+     
+        if(pa==0xFF7F3300) {
+     		add(new Road(xx*32,yy*32,ID.Floor,4));
+     		if(getPixel(xx+1,yy)==Pixels.FLOOR) {
+        		add(new Road((xx)*32,yy*32,ID.Floor,1));
+        	}
+     		if(getPixel(xx-1,yy)==Pixels.FLOOR) {
+        		add(new Road(xx*32,yy*32,ID.Floor,0));
+        	}
+     		if(getPixel(xx,yy-1)==Pixels.FLOOR) {
+     			add(new Road(xx*32,yy*32,ID.Floor,3));
+     		}
+     		if(getPixel(xx,yy+1)==Pixels.FLOOR) {
+     			add(new Road(xx*32,yy*32,ID.Floor,2));
+     		}
+        	if(getPixel(xx+1,yy)==Pixels.FLOOR&&getPixel(xx,yy-1)==Pixels.FLOOR) {
+        		add(new Road(xx*32,yy*32,ID.Floor,5));
+        	}
+        	if(getPixel(xx+1,yy)==Pixels.FLOOR&&getPixel(xx,yy+1)==Pixels.FLOOR) {
+        		add(new Road(xx*32,yy*32,ID.Floor,7));
+        	}
+        	if(getPixel(xx-1,yy)==Pixels.FLOOR&&getPixel(xx,yy+1)==Pixels.FLOOR) {
+        		add(new Road(xx*32,yy*32,ID.Floor,8));
+        	}
+        	if(getPixel(xx-1,yy)==Pixels.FLOOR&&getPixel(xx,yy-1)==Pixels.FLOOR) {
+        		add(new Road(xx*32,yy*32,ID.Floor,6));
+        	}
+        	
+        }
         if(Generator.room.equals("Grass")){
             if (xx == WIDTH - 1) {
                 add(new Tile((xx + 1) * 32, yy * 32, ID.Block, TileType.DarkGrass));
@@ -76,7 +105,7 @@ public class World {
             }
         }
         if (pa == 0xFF00FF21) {
-            add(new SpawnPointRoom(xx * 32, yy * 32, ID.Default));
+            add(new SpawnPointRoom(xx * 32, yy * 32, ID.Portal));
             add(new Tile(xx * 32, yy * 32, ID.Floor, TileType.Grass));
         }
         if (pa == 0xFF808080) {
@@ -94,7 +123,7 @@ public class World {
         if (pa == 0xFF11502C) {
             add(new Tile(xx * 32, yy * 32, ID.Block, TileType.DarkGrass));
             if(new Random().nextInt(100)<5){
-                add(new Trees((xx) * 32, (yy-3) * 32, ID.Block, new Random().nextInt(2)));
+                add(new Trees((xx) * 32, (yy-3) * 32, ID.Block, new Random().nextInt(3)));
             }
         }
 

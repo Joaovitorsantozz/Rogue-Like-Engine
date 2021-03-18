@@ -24,7 +24,7 @@ import java.util.Random;
 
 public class Player extends GameObject implements Tickable, Renderable {
     public GameObjectHandler hand;
-    public float speed = 5f;
+    public float speed = 10f;
     private BufferedImage spr = new LoadImage("/GameObject/Player.png").getImage(), anim[], idle[];
     Animator an;
     public WeaponBase equiped;
@@ -113,24 +113,26 @@ public class Player extends GameObject implements Tickable, Renderable {
     private void CreateParticles() {
         BufferedImage part=HandlerGame.spr.getSprite(5,83,6,6);
         int maxParticles=15;
+        Random r=new Random();
         if (hand.isRight()) {
             if (new Random().nextInt(100) < maxParticles) {
-                new ParticleHandler().CreateParticlesImage(2, 10, getX() + new Random().nextInt(10)
-                        , getY() + getHeight() - 10, 0, getDir() / 10F, part);
+                new ParticleHandler().CreateParticlesImage(10,10,(getX()+getWidth())+r.nextInt(10),(getY()+getHeight())+r.nextInt(10),
+                		r.nextFloat(),r.nextFloat(),part);
             }
         } else if (hand.isLeft()) {
             if (new Random().nextInt(100) <maxParticles) {
-                new ParticleHandler().CreateParticlesImage(2, 10, (getX() + getWidth()) + new Random().nextInt(10)
-                        , getY() + getHeight() - 10, 0, getDir() / 10F,part);
+              new ParticleHandler().CreateParticlesImage(4, 10, (getX() + getWidth()) + new Random().nextInt(10)
+                 , getY() + getHeight() - 10, 0, getDir() / 10F,part);
+          
             }
         } else if (hand.isUp()) {
             if (new Random().nextInt(100) <maxParticles) {
-                new ParticleHandler().CreateParticlesImage(2, 10, (getX() + 5) + new Random().nextInt(10)
+                new ParticleHandler().CreateParticlesImage(4, 10, (getX() + 5) + new Random().nextInt(10)
                         , getY() + getHeight() - 10, 0, getDir() / 10F,part);
             }
         } else if (hand.isDown()) {
             if (new Random().nextInt(100) <maxParticles) {
-                new ParticleHandler().CreateParticlesImage(2, 10, getX() + new Random().nextInt(10)
+                new ParticleHandler().CreateParticlesImage(4, 10, getX() + new Random().nextInt(10)
                         , getY() - 10, 0, getDir() / 10F,part);
             }
         }
